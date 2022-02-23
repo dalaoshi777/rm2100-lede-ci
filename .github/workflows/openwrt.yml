@@ -81,7 +81,7 @@ jobs:
       - name: 组织文件目录
         id: organize
         run: |
-          cd openwrt/bin/targets/*/*
+          cd lede/bin/targets/*/*
           rm -rf packages
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
