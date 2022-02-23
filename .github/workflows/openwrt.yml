@@ -31,18 +31,20 @@ jobs:
         uses: actions/checkout@master
 
       - name: Initialization environment
-        env:EBIA
+        env:
           DN_FRONTEND: noninteractive
         run: |
           sudo -E apt-get -yqq update
           sudo -E apt-get -yqq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
+
       - name: 下载lede源码和获取自己定义.config文件
         run: |
           git clone https://github.com/coolsnowwolf/lede
           cp .config ./lede/.config
           mv ./lede/* ./
+
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
          sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default && sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
@@ -53,6 +55,7 @@ jobs:
       - name: Costom configure file
         run: |
           make defconfig
+
       - name: 下载package源码
         id: package       
         run: |
@@ -68,6 +71,7 @@ jobs:
           grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
           [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
           echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+          
       - name : Upload artifact
         uses: actions/upload-artifact@v2
         with:
