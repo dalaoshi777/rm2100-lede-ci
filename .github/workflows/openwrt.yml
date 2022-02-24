@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_firmwaOpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}re
-          path: openwrt/bin
+          path: bin
 
       - name: 组织文件目录
         id: organize
