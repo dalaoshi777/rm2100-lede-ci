@@ -76,20 +76,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_firmwaOpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}re
-<<<<<<< HEAD
           path: ./bin
-=======
-          path: bin
->>>>>>> eea1d3c0a671c04a153e26211cbc475bb5262be6
 
       - name: 组织文件目录
         id: organize
         run: |
-<<<<<<< HEAD
           cd ./bin/targets/*/*
-=======
-          cd bin/targets/*/*
->>>>>>> eea1d3c0a671c04a153e26211cbc475bb5262be6
           rm -rf packages
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
