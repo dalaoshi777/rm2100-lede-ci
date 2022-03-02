@@ -48,7 +48,7 @@ jobs:
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
          sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default && sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
-         git clone https://github.com/sbwml/openwrt-alist --depth=1 ./package
+         cd package && git clone https://github.com/sbwml/openwrt-alist --depth=1 && cd ..
       - name: 更新feeds
         run: |
           ./scripts/feeds update -a
