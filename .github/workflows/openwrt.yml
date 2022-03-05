@@ -19,6 +19,17 @@ on:
     types: started
 
 env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: .config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  #UPLOAD_COWTRANSFER: false
+  #UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -41,9 +52,9 @@ jobs:
 
       - name: 下载lede源码和获取自己定义.config文件
         run: |
-          git clone https://github.com/coolsnowwolf/lede
+          git clone $REPO_URL
           cp .config ./lede/.config
-          mv ./lede/* ./
+          cd ./lede
 
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
