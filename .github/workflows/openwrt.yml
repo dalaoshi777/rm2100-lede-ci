@@ -54,7 +54,7 @@ jobs:
         run: |
           git clone $REPO_URL
           cp .config ./lede/.config
-          cd /lede
+          cd lede
 
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
