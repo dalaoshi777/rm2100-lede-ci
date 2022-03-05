@@ -43,8 +43,7 @@ jobs:
         run: |
           git clone https://github.com/coolsnowwolf/lede
           cp .config ./lede/.config
-          cd lede
-
+          mv ./lede/* ./
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
          ls
