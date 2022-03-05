@@ -1,6 +1,24 @@
 # 红米ac2100 lede 云编译
-1. 每天凌晨2点自动编译
-2. 默认ip:192.168.1.1
-3. 默认密码:password
-4. 插件:vssr(老竭力) 广告屏蔽大师 上网时间控制 阿里云盘WebDav 解锁网易云 动态dns 网络唤醒 KMS服务器 UPnp ZeroTier 宽带监控 argon主题设置
-5. 默认主题:argon(老竭力)
+精简固件
+lean源码:https://github.com/coolsnowwolf/lede
+每天凌晨2点自动编译
+默认ip:192.168.1.1
+默认密码:password
+---
+插件:
+luci-app-vssr(老竭力HelloWord)
+luci-app-adbyby-plus(广告拦截plus)
+luci-app-alist(一个支持多存储的文件列表程序)
+luci-app-argonne-config(老竭力argone主题设置)
+luci-app-ddns(动态dns)
+luci-app-nlbwmon(宽带监控)
+luci-app-unblockmusic(网易云解锁)
+luci-app-upnp
+luci-app-zerotier
+luci-app-ttyd(终端)
+---
+默认主题：argone(老竭力)
+---
+alist:https://github.com/Xhofe/alist
+openwrt-alist:https://github.com/sbwml/openwrt-alist
+软件包:https://github.com/kenzok8/openwrt-packages
