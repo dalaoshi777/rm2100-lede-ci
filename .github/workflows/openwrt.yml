@@ -41,31 +41,30 @@ jobs:
 
       - name: 下载lede源码和获取自己定义.config文件
         run: |
-          git clone https://github.com/coolsnowwolf/lede
-          cp .config ./lede/.config
-          mv ./lede/* ./
+          git clone https://github.com/coolsnowwolf/lede && cp .config ./lede/.config
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
-         ls
+         cd lede
          sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
          sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
       - name: 更新feeds
         run: |
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
+          cd lede && ./scripts/feeds update -a && ./scripts/feeds install -a
       - name: Costom configure file
         run: |
-          make defconfig
+          cd lede && make defconfig
 
       - name: 下载package源码
         id: package       
         run: |
+          cd lede
           make download -j8
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
       - name: 编译固件
         id: compile
         run: |
+          cd lede
           echo -e "$(nproc) thread build."
           make -j$(nproc) V=s
           echo "::set-output name=status::success"
@@ -76,7 +75,7 @@ jobs:
       - name: 组织文件目录
         id: organize
         run: |
-          cd ./bin/targets/*/*
+          cd lede/bin/targets/*/*
           rm -rf packages
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "::set-output name=status::success"
