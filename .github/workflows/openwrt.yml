@@ -42,6 +42,7 @@ jobs:
       - name: 下载lede源码和获取自己定义.config文件
         run: |
           git clone https://github.com/coolsnowwolf/lede && cp .config ./lede/.config
+          cd lede && cat .config
       - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
         run: |
          cd lede
