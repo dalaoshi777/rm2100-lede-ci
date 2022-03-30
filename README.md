@@ -1,5 +1,6 @@
-# 红米ac2100 lede 云编译
-精简固件
+# 红米ac2100 k2p d2 lede 云编译
+Build OpenWrt using GitHub Actions | 使用 GitHub Actions 编译 OpenWrt | 感谢P3TERX的项目源码|感谢KFERMercer的项目源码
+https ://github.com/P3TERX/Actions-OpenWrt/
 
 **lean源码**:https://github.com/coolsnowwolf/lede
 
@@ -16,8 +17,6 @@ luci-app-vssr(老竭力HelloWord)
 
 luci-app-adbyby-plus(广告拦截plus)
 
-luci-app-alist(一个支持多存储的文件列表程序)
-
 luci-app-argonne-config(老竭力argone主题设置)
 
 luci-app-ddns(动态dns)
@@ -26,18 +25,21 @@ luci-app-nlbwmon(宽带监控)
 
 luci-app-unblockmusic(网易云解锁)
 
-luci-app-upnp
+luci-app-upnp(端口自动转发)
 
-luci-app-zerotier
+luci-app-zerotier(内网穿透)
 
 luci-app-ttyd(终端)
 
+luci-app-sqm(就qos)
+
+luci-app-eqs(根据ip限速)
+
+luci-app-wol(网络唤醒)
+
+frpc&&frps
+
 ---
 默认主题：argone(老竭力)
-
 ---
-**alist**:https://github.com/Xhofe/alist
-
-**openwrt-alist**:https://github.com/sbwml/openwrt-alist
-
 **软件包**:https://github.com/kenzok8/openwrt-packages
