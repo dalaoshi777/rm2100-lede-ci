@@ -158,7 +158,7 @@ jobs:
       uses: LasyIsLazy/github-upload-action@v0.1.0
       with:
         access-token: ${{ secrets.ACCESS_TOKEN }}
-        file-path: ${{ env.FIRMWARE }}/*
+        file-path: /openwrt/bin/targets/ramips/mt7621/*
         owner: dalaoshi777
         repo: LEDE-Firmware-Repository
         remote-dir: /d2
