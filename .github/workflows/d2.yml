@@ -151,6 +151,18 @@ jobs:
       with:
         retain_days: 1
         keep_minimum_runs: 3
+    - name: Setup node
+      uses: actions/setup-node@v1
+
+    - name: Upload to GitHub
+      uses: LasyIsLazy/github-upload-action@v0.1.0
+      with:
+        access-token: ${{ secrets.ACCESS_TOKEN }}
+        file-path: ${{ env.FIRMWARE }}/*
+        owner: dalaoshi777
+        repo: LEDE-Firmware-Repository
+        remote-dir: /d2
+
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
