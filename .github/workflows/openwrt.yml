@@ -1,0 +1,114 @@
+#
+# This is free software, lisence use MIT.
+# 
+# Copyright (C) 2019 P3TERX <https://p3terx.com>
+# Copyright (C) 2020 KFERMercer <KFER.Mercer@gmail.com>
+# 
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+
+name: OpenWrt
+
+on:
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: 0 2 * * *
+  watch:
+    types: started
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Initialization environment
+        env:
+          DN_FRONTEND: noninteractive
+        run: |
+          sudo -E apt-get -yqq update
+          sudo -E apt-get -yqq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+
+      - name: 下载lede源码和获取自己定义.config文件
+        run: |
+          git clone https://github.com/coolsnowwolf/lede && cp .config ./lede/.config
+          cd lede && cat .config
+      - name: 添加kenzok8仓库提供的openwrt常用插件包和依赖
+        run: |
+         cd lede
+         sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+         sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
+      - name: 更新feeds
+        run: |
+          cd lede && ./scripts/feeds update -a && ./scripts/feeds install -a
+      - name: Costom configure file
+        run: |
+          cd lede && make defconfig
+
+      - name: 下载package源码
+        id: package       
+        run: |
+          cd lede
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+      - name: 编译固件
+        id: compile
+        run: |
+          cd lede
+          echo -e "$(nproc) thread build."
+          make -j$(nproc) V=s
+          echo "::set-output name=status::success"
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+      - name: 组织文件目录
+        id: organize
+        run: |
+          cd lede/bin/targets/*/*
+          rm -rf package
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@v2
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          path: ${{ env.FIRMWARE }}
+
+      - name: 生成发布标签
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
+          touch release.txt
+          echo "::set-output name=status::success"          
+            
+      - name: 上传固件到release
+        uses: softprops/action-gh-release@v1
+        if: steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          body_path: release.txt
+          files: ${{ env.FIRMWARE }}/*
+
+      - name: 移除旧的Releases
+        uses: dev-drprasad/delete-older-releases@v0.1.0
+        with:
+          keep_latest: 3
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
