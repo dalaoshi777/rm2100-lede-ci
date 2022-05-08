@@ -7,7 +7,7 @@ Build OpenWrt using GitHub Actions | 使用 GitHub Actions 编译 OpenWrt | 感�
 
 ---
 ### 如何使用？
-fork这个项目👉👉👉然后在自己fork的项目中点击actions👉👉👉找到需要的设备点击Run workflow
+每周更新(ac2100)[⬇️点击下载⬇️](https://github.com/dalaoshi777/rm2100-lede-ci/releases/latest/openwrt-ramips-mt7621-xiaomi_redmi-router-ac2100-squashfs-sysupgrade.bin)
 
 | 默认ip | 默认密码 | 默认主题|
 | :---: | :---: |:---:|
