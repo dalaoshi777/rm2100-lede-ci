@@ -12,7 +12,7 @@ name: Build rmac2100 OpenWrt
 
 on:
   schedule:
-   - cron: 0 6 * * 5
+   - cron: "40 10 * * 5"
   repository_dispatch:
   workflow_dispatch:
     inputs:
