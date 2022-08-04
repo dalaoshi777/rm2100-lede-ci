@@ -11,7 +11,7 @@ Build OpenWrt using GitHub Actions | 使用 GitHub Actions 编译 OpenWrt | 感�
 
 | 默认ip | 默认密码 | 默认主题|
 | :---: | :---: |:---:|
-|192.168.1.1|password|老竭力argone|
+|192.168.31.1|password|老竭力argone|
 
 
 | 插件名称 | 插件介绍 |
