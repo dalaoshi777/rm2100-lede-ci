@@ -10,7 +10,7 @@ Build OpenWrt using GitHub Actions | 使用 GitHub Actions 编译 OpenWrt | 感�
 
 ## 如何使用？
 
-本项目不在自动更新，frok此项目手动执行actions
+本项目不再自动更新，frok此项目手动执行actions
 
 |    默认ip    | 默认密码 |   默认主题   |
 | :----------: | :------: | :----------: |
