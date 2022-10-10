@@ -10,6 +10,8 @@ Build OpenWrt using GitHub Actions | 使用 GitHub Actions 编译 OpenWrt | 感�
 
 ## 如何使用？
 
+本项目将不再进行维护，应为一些原因，不过conifg依旧可用，默认闭源驱动，ssrp协议基本全齐。
+
 本项目不再自动更新，frok此项目手动执行actions
 
 |    默认ip    | 默认密码 |   默认主题   |
